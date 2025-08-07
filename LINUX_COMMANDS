@@ -1,0 +1,41 @@
+1. ls — List directory contents
+ls
+ls -l        # Long listing format
+ls -a        # Show hidden files
+
+2. cd — Change directory
+cd linux-basics/day1   # Move into your folder
+cd ..                  # Move one level up
+cd ~                   # Go to home directory
+
+🏗️ 3. mkdir — Make directories
+mkdir newfolder        # Create folder
+mkdir -p a/b/c         # Create nested folders
+
+🧹 4. rm — Remove files or directories
+rm file.txt            # Remove a file
+rm -r folder/          # Remove a folder and its contents
+rm -rf folder/         # Force remove without confirmation (⚠️ dangerous)
+
+📝 5. touch — Create empty file
+touch notes.txt
+
+✏️ 6. echo — Print text or write to a file
+echo "Linux is fun!"             # Print to terminal
+echo "My first note" > note.txt # Write to file (overwrite)
+echo "Next line" >> note.txt     # Append to file
+
+📄 7. cat — View contents of a file
+cat note.txt
+
+🔍 8. pwd — Print current directory
+pwd
+
+📦 9. cp — Copy files/folders
+cp file.txt backup.txt
+cp -r folder1/ folder2/
+
+🔀 10. mv — Move or rename files/folders
+mv oldname.txt newname.txt
+mv file.txt folder/      # Move file to folder
+
