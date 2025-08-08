@@ -39,3 +39,31 @@ cp -r folder1/ folder2/
 mv oldname.txt newname.txt
 mv file.txt folder/      # Move file to folder
 
+# SOME ADVANCE COMMANDS 
+
+1. rm : we use rm if want to remove files 
+        example: rm demofile.txt
+2. rmdir(remove directory) : it removes the directory
+        example: rmdir devops_learning
+3.cat: it is used to show the content which is inside the file
+        example: cat demofile.txt
+If there is no content inside the file so we can add it using ECHO
+    example : echo "hello-world"
+    output: hello-world
+echo: echo "hello-world" > demofile.txt // it will move hello-world into demofile.txt file
+
+4.head:it actually gives top 5 lines content of that file
+
+5.tail: it gives bottom 5 lines of that file
+
+6.tail -f : tail -f demofile.txt it is used to give the data which is added after words
+
+7.less: less demofile.txt // if file contains multiple pages then it will show one page at a time 
+
+8.cp: it copies the content of one file to another file
+    for example: myfile.txt contains data and demofile.txt is empty then command looks like 
+    cp myfile.txt demofile.txt
+
+9.
+
+
