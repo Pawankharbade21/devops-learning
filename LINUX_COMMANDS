@@ -1,69 +1,98 @@
-1. ls — List directory contents
-ls
-ls -l        # Long listing format
-ls -a        # Show hidden files
+#!/bin/bash
+# ==========================================
+# LINUX REVISION NOTES (Day 1 to Day 5)
+# ==========================================
+# This file is structured for learning + quick revision.
+# You can run commands in terminal as examples.
+# ------------------------------------------
 
-2. cd — Change directory
-cd linux-basics/day1   # Move into your folder
-cd ..                  # Move one level up
-cd ~                   # Go to home directory
 
-🏗️ 3. mkdir — Make directories
-mkdir newfolder        # Create folder
-mkdir -p a/b/c         # Create nested folders
-
-🧹 4. rm — Remove files or directories
-rm file.txt            # Remove a file
-rm -r folder/          # Remove a folder and its contents
-rm -rf folder/         # Force remove without confirmation (⚠️ dangerous)
-
-📝 5. touch — Create empty file
-touch notes.txt
-
-✏️ 6. echo — Print text or write to a file
-echo "Linux is fun!"             # Print to terminal
-echo "My first note" > note.txt # Write to file (overwrite)
-echo "Next line" >> note.txt     # Append to file
-
-📄 7. cat — View contents of a file
-cat note.txt
-
-🔍 8. pwd — Print current directory
+# -------------------------------
+# DAY 1: Basic Navigation
+# -------------------------------
+# 'pwd' -> Print working directory (where am I?)
 pwd
 
-📦 9. cp — Copy files/folders
-cp file.txt backup.txt
-cp -r folder1/ folder2/
+# 'ls' -> List files and directories
+ls
+ls -l       # long listing with permissions, ownership, size, date
+ls -a       # show hidden files (starting with .)
 
-🔀 10. mv — Move or rename files/folders
-mv oldname.txt newname.txt
-mv file.txt folder/      # Move file to folder
-
-# SOME ADVANCE COMMANDS 
-
-1. rm : we use rm if want to remove files 
-        example: rm demofile.txt
-2. rmdir(remove directory) : it removes the directory
-        example: rmdir devops_learning
-3.cat: it is used to show the content which is inside the file
-        example: cat demofile.txt
-If there is no content inside the file so we can add it using ECHO
-    example : echo "hello-world"
-    output: hello-world
-echo: echo "hello-world" > demofile.txt // it will move hello-world into demofile.txt file
-
-4.head:it actually gives top 5 lines content of that file
-
-5.tail: it gives bottom 5 lines of that file
-
-6.tail -f : tail -f demofile.txt it is used to give the data which is added after words
-
-7.less: less demofile.txt // if file contains multiple pages then it will show one page at a time 
-
-8.cp: it copies the content of one file to another file
-    for example: myfile.txt contains data and demofile.txt is empty then command looks like 
-    cp myfile.txt demofile.txt
-
-9.
+# 'cd' -> Change directory
+cd /home    # move to /home directory
+cd ~        # move to home directory of current user
+cd ..       # move one level up
 
 
+# -------------------------------
+# DAY 2: File & Directory Operations
+# -------------------------------
+# Creating files and directories
+touch file1.txt file2.txt       # create empty files
+mkdir myfolder                  # create directory
+mkdir -p parent/child           # create nested directories
+
+# Copying, moving, renaming
+cp file1.txt backup_file1.txt   # copy file
+mv file2.txt renamed_file2.txt  # rename file
+mv renamed_file2.txt myfolder/  # move file to folder
+
+# Deleting
+rm backup_file1.txt             # remove file
+rm -r myfolder                  # remove directory recursively
+rm -rf myfolder                 # force remove without asking (dangerous!)
+
+
+# -------------------------------
+# DAY 3: File Viewing & Editing
+# -------------------------------
+# Viewing file content
+cat file1.txt                   # display entire file content
+less /etc/passwd                # open file with page-by-page navigation
+head -5 file1.txt               # show first 5 lines
+tail -5 file1.txt               # show last 5 lines
+tail -f logfile.log             # follow logs in real-time
+
+# Editing files
+nano file1.txt                  # simple editor
+vim file1.txt                   # powerful editor (advanced use)
+
+
+# -------------------------------
+# DAY 4: User & Group Management
+# -------------------------------
+# 'whoami' -> shows current logged in user
+whoami
+
+# Adding users (requires root)
+# sudo useradd newuser
+# sudo passwd newuser
+
+# Switching user
+su - newuser
+
+# Adding groups
+# sudo groupadd developers
+# sudo usermod -aG developers newuser   # add user to group
+
+
+# -------------------------------
+# DAY 5: Permissions & Ownership
+# -------------------------------
+# Each file/directory has 3 types of permissions: r, w, x
+# For 3 categories: User(owner), Group, Others
+# Example from 'ls -l':
+# -rwxr-xr--   1 user group   1234 Jan 1  file.sh
+# u=user(owner), g=group, o=others
+
+# chmod (change permissions)
+chmod 755 file.sh               # numeric: rwx r-x r-x
+chmod u+x file.sh               # symbolic: add execute permission to user
+chmod g-w file.sh               # remove write permission from group
+chmod o=r file.sh               # give read-only permission to others
+
+# chown (change owner + group)
+sudo chown newuser:newgroup file.sh
+
+# chgrp (change only group ownership)
+sudo chgrp developers file.sh
