@@ -1,98 +1,135 @@
-#!/bin/bash
-# ==========================================
-# LINUX REVISION NOTES (Day 1 to Day 5)
-# ==========================================
-# This file is structured for learning + quick revision.
-# You can run commands in terminal as examples.
-# ------------------------------------------
+# Linux Basics Revision (Day 1 - Day 5)
+# Save this file as linux_basics.sh (for notes) or README.md (for repo)
+# This contains Linux fundamentals with explanations and commands.
 
+#########################################
+# Day 1: Linux Basics & Navigation
+#########################################
 
-# -------------------------------
-# DAY 1: Basic Navigation
-# -------------------------------
-# 'pwd' -> Print working directory (where am I?)
+# Print working directory (shows where you are)
 pwd
 
-# 'ls' -> List files and directories
-ls
-ls -l       # long listing with permissions, ownership, size, date
-ls -a       # show hidden files (starting with .)
+# List files in current directory
+ls               # basic listing
+ls -l            # long format (permissions, owner, size, date)
+ls -a            # show hidden files (those starting with .)
+ls -lh           # human-readable sizes
 
-# 'cd' -> Change directory
-cd /home    # move to /home directory
-cd ~        # move to home directory of current user
-cd ..       # move one level up
+# Change directory
+cd /             # go to root
+cd ~             # go to home directory
+cd ..            # move one level up
+cd -             # switch to previous directory
 
+# View file content
+cat file.txt     # print entire file
+less file.txt    # scroll through file (q to quit)
+head file.txt    # first 10 lines
+tail file.txt    # last 10 lines
+tail -f file.txt # live monitoring (useful for logs)
 
-# -------------------------------
-# DAY 2: File & Directory Operations
-# -------------------------------
-# Creating files and directories
-touch file1.txt file2.txt       # create empty files
-mkdir myfolder                  # create directory
-mkdir -p parent/child           # create nested directories
+#########################################
+# Day 2: Files & Directories
+#########################################
 
-# Copying, moving, renaming
-cp file1.txt backup_file1.txt   # copy file
-mv file2.txt renamed_file2.txt  # rename file
-mv renamed_file2.txt myfolder/  # move file to folder
+# Create directories
+mkdir mydir                 # single directory
+mkdir -p parent/child/grand # nested directories
 
-# Deleting
-rm backup_file1.txt             # remove file
-rm -r myfolder                  # remove directory recursively
-rm -rf myfolder                 # force remove without asking (dangerous!)
+# Create files
+touch file1.txt             # empty file
+echo "Hello World" > file2.txt   # write text into file
+echo "New Line" >> file2.txt    # append text to file
 
+# Copy, move, remove
+cp file1.txt copy.txt       # copy file
+mv file1.txt newname.txt    # rename/move file
+rm file.txt                 # remove file
+rm -r mydir                 # remove directory recursively
 
-# -------------------------------
-# DAY 3: File Viewing & Editing
-# -------------------------------
-# Viewing file content
-cat file1.txt                   # display entire file content
-less /etc/passwd                # open file with page-by-page navigation
-head -5 file1.txt               # show first 5 lines
-tail -5 file1.txt               # show last 5 lines
-tail -f logfile.log             # follow logs in real-time
+# Search
+find . -name "file2.txt"     # find file by name
+grep "text" file2.txt        # search text inside file
+grep -i "hello" file2.txt    # case insensitive search
 
-# Editing files
-nano file1.txt                  # simple editor
-vim file1.txt                   # powerful editor (advanced use)
+#########################################
+# Day 3: Users & Permissions
+#########################################
 
-
-# -------------------------------
-# DAY 4: User & Group Management
-# -------------------------------
-# 'whoami' -> shows current logged in user
+# Check current user
 whoami
 
-# Adding users (requires root)
-# sudo useradd newuser
-# sudo passwd newuser
+# Show all users currently logged in
+who
 
-# Switching user
-su - newuser
+# File permissions (rwx explained)
+ls -l file2.txt   # output like: -rw-r--r--
+# r = read, w = write, x = execute
+# First char: file(-) or directory(d)
 
-# Adding groups
-# sudo groupadd developers
-# sudo usermod -aG developers newuser   # add user to group
+# Change permissions with chmod
+chmod 755 script.sh
+# 7 = rwx (owner), 5 = r-x (group), 5 = r-x (others)
+# Example: chmod u+x file.sh (give execute to user)
 
+# Change owner of file (requires sudo)
+sudo chown username file.txt
 
-# -------------------------------
-# DAY 5: Permissions & Ownership
-# -------------------------------
-# Each file/directory has 3 types of permissions: r, w, x
-# For 3 categories: User(owner), Group, Others
-# Example from 'ls -l':
-# -rwxr-xr--   1 user group   1234 Jan 1  file.sh
-# u=user(owner), g=group, o=others
+#########################################
+# Day 4: Processes & Jobs
+#########################################
 
-# chmod (change permissions)
-chmod 755 file.sh               # numeric: rwx r-x r-x
-chmod u+x file.sh               # symbolic: add execute permission to user
-chmod g-w file.sh               # remove write permission from group
-chmod o=r file.sh               # give read-only permission to others
+# Show running processes
+ps              # current shell processes
+ps -ef          # all processes in detail
+top             # interactive process monitor (q to quit)
+htop            # better version (if installed)
 
-# chown (change owner + group)
-sudo chown newuser:newgroup file.sh
+# Background & foreground jobs
+sleep 60 &       # run process in background
+jobs             # list jobs
+fg %1            # bring job 1 to foreground
+bg %1            # send job 1 to background
 
-# chgrp (change only group ownership)
-sudo chgrp developers file.sh
+# Kill process
+kill <PID>       # terminate with PID
+kill -9 <PID>    # force kill
+
+#########################################
+# Day 5: File Permissions Deep Dive
+#########################################
+
+# chmod with symbolic notation
+chmod u+x file.sh   # add execute for user
+chmod g-w file.sh   # remove write from group
+chmod o+r file.sh   # give read to others
+
+# chmod with numbers
+# r = 4, w = 2, x = 1 (add them up)
+# Example: rwx = 7, rw- = 6, r-- = 4
+chmod 644 file.txt  # owner=rw-, group=r--, others=r--
+chmod 700 secret.sh # only owner can rwx
+
+# chown examples
+sudo chown pawan:pawan file.txt   # change owner and group
+sudo chown root file.txt          # change owner only
+
+#########################################
+# Extras Useful for DevOps
+#########################################
+
+# Monitoring system
+uptime           # how long system has been running
+free -h          # memory usage
+df -h            # disk usage
+du -sh *         # size of each file/dir in current dir
+
+# Networking
+ifconfig         # show IP (older)
+ip addr show     # modern way
+ping google.com  # check connectivity
+netstat -tulnp   # list open ports & processes
+
+#########################################
+# End of Day 1-5 Revision
+#########################################
