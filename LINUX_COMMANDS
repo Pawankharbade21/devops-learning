@@ -1,135 +1,71 @@
-# Linux Basics Revision (Day 1 - Day 5)
-# Save this file as linux_basics.sh (for notes) or README.md (for repo)
-# This contains Linux fundamentals with explanations and commands.
+Basics
 
-#########################################
-# Day 1: Linux Basics & Navigation
-#########################################
+File system Hierarchy
 
-# Print working directory (shows where you are)
-pwd
+📂/bin → Binaries (Essential User Commands)
+	Contains basic command binaries needed by all users.
+	Example: commands like ls, cp, mv, cat, echo, mkdir, etc. are stored here.
+	These are "essential tools" — if /bin is broken, even the root user can’t perform basic operations.
 
-# List files in current directory
-ls               # basic listing
-ls -l            # long format (permissions, owner, size, date)
-ls -a            # show hidden files (those starting with .)
-ls -lh           # human-readable sizes
+📂 /etc → Configuration Files
+		•	Contains system-wide configuration files (not user-specific).
+    * Examples:
+        * /etc/passwd → user account info
+        * /etc/hostname → system hostname
+        * /etc/resolv.conf → DNS settings
+        * /etc/ssh/sshd_config → SSH server settings
+    * Whenever you install software, most of its config files go inside /etc.
+👉 Think of /etc as the "control center" of the system.
 
-# Change directory
-cd /             # go to root
-cd ~             # go to home directory
-cd ..            # move one level up
-cd -             # switch to previous directory
+ 📂 /var → Variable Data
+		•	Contains files that change frequently.
+    * Examples:
+        *  /var/log/ → system logs (important for debugging, e.g., /var/log/syslog, /var/log/auth.log)
+        * /var/spool/mail/ → emails
+        * /var/cache/ → cache data
+    * Think of /var as a place where constantly changing data is stored.
+👉 If /var becomes full, services may crash because logs can’t be written.
 
-# View file content
-cat file.txt     # print entire file
-less file.txt    # scroll through file (q to quit)
-head file.txt    # first 10 lines
-tail file.txt    # last 10 lines
-tail -f file.txt # live monitoring (useful for logs)
+📂 /tmp → Temporary Files
+    * Stores temporary files created by users and apps.
+    * Example: when you open a Word file or Chrome tab, temp data may be placed here.
+    * Files inside /tmp are usually deleted on reboot.
+    * 👉 Hackers sometimes use /tmp to execute scripts because it’s writable by everyone.
 
-#########################################
-# Day 2: Files & Directories
-#########################################
+📂 /root → Root User’s Home Directory
+    * This is the home directory of the root (superuser).
+    * Equivalent to /home/root, but kept separate for security reasons.
+    * Only root user has access to it.
+👉 Think of it like Admin’s private room.
 
-# Create directories
-mkdir mydir                 # single directory
-mkdir -p parent/child/grand # nested directories
 
-# Create files
-touch file1.txt             # empty file
-echo "Hello World" > file2.txt   # write text into file
-echo "New Line" >> file2.txt    # append text to file
+/
+├── bin    → Essential user binaries (ls, cp, mv)
+├── etc    → Configuration files
+├── home   → Users’ home directories
+├── var    → Logs, caches, spool data
+├── tmp    → Temporary files
+├── root   → Root user’s home
+├── usr    → User programs and libraries
+├── sbin   → System binaries (for admin tasks)
+├── lib    → Shared libraries needed by system binaries
+├── dev    → Device files (representing hardware, e.g., disks, USBs)
+├── proc   → Virtual filesystem with system and process info
+├── sys    → System info about devices, kernel
+├── boot   → Bootloader files (kernel, initrd, GRUB)
+├── opt    → Optional software (extra apps not part of system)
+├── mnt    → Mount point for temporarily mounted filesystems
+├── media  → Mount point for removable devices (USB, CD, etc.)
 
-# Copy, move, remove
-cp file1.txt copy.txt       # copy file
-mv file1.txt newname.txt    # rename/move file
-rm file.txt                 # remove file
-rm -r mydir                 # remove directory recursively
+Basic Linux Commands
+* Navigation: pwd, ls, cd
+* File operations: touch, cp, mv, rm, cat, more, less, head, tail
+* Directory operations: mkdir, rmdir, tree
+* File content search: grep, find, locate
+* Counting: wc, sort, uniq, cut
+* Comparing: diff, cmp, comm
 
-# Search
-find . -name "file2.txt"     # find file by name
-grep "text" file2.txt        # search text inside file
-grep -i "hello" file2.txt    # case insensitive search
 
-#########################################
-# Day 3: Users & Permissions
-#########################################
 
-# Check current user
-whoami
 
-# Show all users currently logged in
-who
 
-# File permissions (rwx explained)
-ls -l file2.txt   # output like: -rw-r--r--
-# r = read, w = write, x = execute
-# First char: file(-) or directory(d)
-
-# Change permissions with chmod
-chmod 755 script.sh
-# 7 = rwx (owner), 5 = r-x (group), 5 = r-x (others)
-# Example: chmod u+x file.sh (give execute to user)
-
-# Change owner of file (requires sudo)
-sudo chown username file.txt
-
-#########################################
-# Day 4: Processes & Jobs
-#########################################
-
-# Show running processes
-ps              # current shell processes
-ps -ef          # all processes in detail
-top             # interactive process monitor (q to quit)
-htop            # better version (if installed)
-
-# Background & foreground jobs
-sleep 60 &       # run process in background
-jobs             # list jobs
-fg %1            # bring job 1 to foreground
-bg %1            # send job 1 to background
-
-# Kill process
-kill <PID>       # terminate with PID
-kill -9 <PID>    # force kill
-
-#########################################
-# Day 5: File Permissions Deep Dive
-#########################################
-
-# chmod with symbolic notation
-chmod u+x file.sh   # add execute for user
-chmod g-w file.sh   # remove write from group
-chmod o+r file.sh   # give read to others
-
-# chmod with numbers
-# r = 4, w = 2, x = 1 (add them up)
-# Example: rwx = 7, rw- = 6, r-- = 4
-chmod 644 file.txt  # owner=rw-, group=r--, others=r--
-chmod 700 secret.sh # only owner can rwx
-
-# chown examples
-sudo chown pawan:pawan file.txt   # change owner and group
-sudo chown root file.txt          # change owner only
-
-#########################################
-# Extras Useful for DevOps
-#########################################
-
-# Monitoring system
-uptime           # how long system has been running
-free -h          # memory usage
-df -h            # disk usage
-du -sh *         # size of each file/dir in current dir
-
-# Networking
-ifconfig         # show IP (older)
-ip addr show     # modern way
-ping google.com  # check connectivity
-netstat -tulnp   # list open ports & processes
-
-#########################################
-# End of Day 1-5 Revision
-#########################################
