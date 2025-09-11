@@ -1,0 +1,59 @@
+🔹 1. What is a Process?
+      A process is simply a running instance of a program.
+      Example: When you run firefox, Linux creates a process for it.
+      Every process has:
+        PID (Process ID) → a unique number
+        Parent Process ID (PPID) → the process that started it
+        State → running, sleeping, stopped, zombie
+        Owner/User
+🔹 2. Viewing Processes
+      🔹 1. ps → Process Status
+          Example output:
+              PID TTY          TIME CMD
+              1234 pts/0    00:00:00 bash
+              2345 pts/0    00:00:00 python
+              3456 pts/0    00:00:00 ps
+              PID → Process ID (unique number of the process)
+              TTY → Terminal
+              TIME → CPU time used
+              CMD → Command that started the process
+          👉 Try:
+                ps aux | head
+                  a= show all users
+                  u= show usernames and details
+                  x= show processes not attached to terminal
+      🔹 2. top → Live Process Monitoring
+            Shows running processes in real-time (like Task Manager in Windows).
+                top
+                  PID → Process ID
+                  USER → Owner
+                  %CPU → CPU usage
+                  %MEM → Memory usage
+                  COMMAND → Which program is running
+      🔹 3. kill → Kill a process
+            Used to stop a process by its PID.
+            👉 First, find the process:
+                ps aux | grep python   // grep is used to search 
+              output: pawan   2345  2.0  1.2  123456  7890 pts/0  S+   10:30   0:00 python script.py // here 2345 is a process id
+            👉 Kill it:
+              kill 2345
+            If it doesn’t stop, force kill:
+              kill -9 2345
+      🔹 4. jobs, fg, bg → Background & Foreground jobs
+            Run a program in background:  python script.py &
+            Check jobs: jobs 
+            Bring background job to foreground: fg %1
+            Send running job to background:
+            Press Ctrl+Z → stops process, then run: bg %1
+            ps -ef | grep sleep: if want to find a pid of sleep
+
+          ⚡ So, these are the must-know process management commands:
+          ✅ ps – view processes
+          ✅ top – monitor processes live
+          ✅ kill – stop processes
+          ✅ jobs, fg, bg – manage background/foreground tasks
+
+
+
+
+                
