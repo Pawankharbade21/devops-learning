@@ -1,0 +1,14 @@
+pwd              # Print working directory
+ls               # List files
+ls -l            # Long listing with permissions, size, owner
+ls -a            # Show hidden files
+cd /path/to/dir  # Change directory
+mkdir newdir     # Create new directory
+touch file.txt   # Create empty file
+echo "Hello" > file.txt   # Write text into file
+cat file.txt     # Display file content
+less file.txt    # View file content (scrollable)
+cp file.txt /tmp/   # Copy file
+mv file.txt new.txt # Rename/move file
+rm file.txt      # Delete file
+rm -r folder     # Delete directory recursively
